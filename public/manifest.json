@@ -1,6 +1,6 @@
 {
-	"name": "fgacycyw-pwa",
-	"short_name": "fgacycyw-pwa",
+	"name": "YWKL App",
+	"short_name": "YWKL",
 	"icons": [
 		{
 			"src": "/logo-128x128.png",
@@ -13,8 +13,8 @@
 			"type": "image/png"
 		}
 	],
-	"theme_color": "#ffffff",
-	"background_color": "#ffffff",
+	"theme_color": "#fff",
+	"background_color": "#fff",
 	"start_url": "/",
 	"display": "standalone",
 	"orientation": "portrait"
