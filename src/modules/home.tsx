@@ -1,62 +1,123 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable react/display-name */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { NextPage } from 'next'
-import React from 'react'
-import { Layout, LoginForm } from '../components'
-import TitleText from '../graphics/TitleText'
+import React, { useState } from 'react'
+import { Card, Layout } from '../components'
 
-// const firebaseConfig = {
-// 	apiKey: 'AIzaSyBsMCphihnd55R_ujryu8CG5OHbgAG4gxg',
-// 	authDomain: 'fgacycyw-web.firebaseapp.com',
-// 	projectId: 'fgacycyw-web',
-// 	storageBucket: 'fgacycyw-web.appspot.com',
-// 	messagingSenderId: '1043771250555',
-// 	appId: '1:1043771250555:web:8591e12f5035cd8d00cfde',
-// 	measurementId: 'G-4HD88K0LF1'
-// }
+import { FaInstagram, FaYoutube } from 'react-icons/fa'
+import router from 'next/router'
+import Head from 'next/head'
+
+const cards = [
+	{
+		image: '/assets/upcoming.png',
+		name: 'Upcoming Events',
+		to: '/upcoming'
+	},
+	{
+		image: '/assets/testimonies.png',
+		name: 'Testimonies',
+		to: '/testimonies'
+	}
+]
+
+export const user = {
+	username: 'ET',
+	role: 'user'
+}
 
 const Home: NextPage = () => {
+	const [aboutUs, setAboutUs] = useState<boolean>(false)
+
 	return (
-		<Layout>
-			<div className="w-full h-screen flex flex-col justify-evenly">
-				<div className="flex flex-row my-20 mx-auto">
-					<img
-						src="/assets/logo.jpg"
-						alt="Logo"
-						className="object-scale-down rounded-xl w-[75px]"
-					/>
-					<p className="text-[white] font-montserrat font-extrabold my-auto ml-5 text-3xl">
-						FGACYC Young Warrior KL
+		<>
+			<Head>
+				<title>Home | FGACYCYW KL</title>
+			</Head>
+			<Layout currentPage="home">
+				<div className="w-full px-10 sm:px-20 ">
+					<p className="font-montserrat text-[#210440] text-5xl font-bold mt-10 mb-5">
+						Hello, {user.username}
 					</p>
 				</div>
-				<div
-					className="max-w-[640px] mx-auto rounded-2xl w-full h-full bg-cover flex flex-col bg-center relative z-[1] mb-5"
-					style={{ backgroundImage: "url('/assets/homeBg.png')" }}
-				>
-					<div className="flex flex-col m-auto w-full h-1/2 z-[3]">
-						<TitleText className="transform scale-50 sm:scale-[0.85] my-auto" />
+				<div className="w-full h-full flex flex-col px-10 sm:px-20">
+					<p className="text-xl my-3 font-montserrat text-[#210440] font-semibold">
+						Welcome Home!
+					</p>
+					<div className="flex flex-row w-[150px] justify-between">
+						<p
+							className={`font-century text-[#210440]  text-lg ${
+								!aboutUs
+									? 'pb-1 border-b-[3px] border-[#FFBA00]'
+									: 'cursor-pointer'
+							}`}
+							onClick={() => setAboutUs(false)}
+						>
+							Home
+						</p>
+						<p
+							className={`font-century text-[#210440] text-lg ${
+								aboutUs
+									? 'pb-1 border-b-[3px] border-[#FFBA00]'
+									: 'cursor-pointer'
+							}`}
+							onClick={() => setAboutUs(true)}
+						>
+							About Us
+						</p>
 					</div>
-					<div className="m-auto sm:w-[400px] w-[310px] z-[3] h-1/2 flex flex-col">
-						<LoginForm />
-						<div className="flex flex-col items-center mb-2">
-							<p className="font-century text-sm text-[#210440]">
-								Don&apos;t have an account?
+				</div>
+				{!aboutUs ? (
+					<div className="flex lg:flex-row flex-col gap-5 px-10 sm:px-20 items-center justify-center w-full h-full">
+						{cards.map((card, i) => (
+							<Card
+								home
+								key={i}
+								to={card.to}
+								image={card.image}
+								name={card.name}
+							/>
+						))}
+					</div>
+				) : (
+					<div className="w-full h-full px-10 sm:px-20">
+						<p className="text-xl my-3 font-montserrat text-[#210440] font-semibold">
+							Follow Us!
+						</p>
+						<div
+							className="pl-0 sm:pl-10 flex flex-row cursor-pointer"
+							onClick={() =>
+								router.push('https://instagram.com/fgacycyw')
+							}
+						>
+							<div className="rounded-md bg-[#210400] p-1">
+								<FaInstagram color="white" size={35} />
+							</div>
+							<p className="font-montserrat pl-3 self-center text-2xl font-semibold tracking-widest">
+								Instagram
 							</p>
-							<a href="/signup">
-								<p className="font-century text-base underline text-[#210440]">
-									Create an account
-								</p>
-							</a>
+						</div>
+						<div
+							className="pl-0 sm:pl-10 flex flex-row cursor-pointer mt-5"
+							onClick={() =>
+								router.push(
+									'https://www.youtube.com/user/fgacyc'
+								)
+							}
+						>
+							<div className="rounded-md bg-[#210400] p-1">
+								<FaYoutube color="white" size={35} />
+							</div>
+							<p className="font-montserrat pl-3 self-center text-2xl font-semibold tracking-widest">
+								YouTube
+							</p>
 						</div>
 					</div>
-					<div
-						className="w-full h-full absolute z-[2] rounded-2xl"
-						style={{
-							backgroundImage:
-								'linear-gradient(to bottom, rgba(0, 0, 0, 0), #FDB095 85%, #E5958E)'
-						}}
-					/>
-				</div>
-			</div>
-		</Layout>
+				)}
+			</Layout>
+		</>
 	)
 }
 
